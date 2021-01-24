@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "yotta_leads"
+version = "0.1.0"
+description = "WebApp for lead scoring API"
+authors = ["Jerome Blin <blinjrm@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pandas = "^1.2.1"
+streamlit = "^0.75.0"
+requests = "^2.25.1"
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+isort = "^5.7.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+multi_line_output = 3
+line_length = 100
+include_trailing_comma = true
+
+[tool.black]
+line_length = 100
