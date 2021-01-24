@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
 
-import src.utils as utils
-from src.utils import CallAPI, form
+import utils as utils
+from utils import CallAPI, form
 
 
 API = CallAPI()
