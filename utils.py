@@ -2,9 +2,7 @@ import requests
 import streamlit as st
 
 
-PROJECT_DESCRIPTION = "Projection desciption"
-
-API_URL = "http://35.240.18.17:8000"
+API_URL = "http://35.190.204.113:8000"
 
 
 class CallAPI:

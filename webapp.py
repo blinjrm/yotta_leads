@@ -7,20 +7,34 @@ from utils import CallAPI, form
 
 API = CallAPI()
 
+PROJECT_DESCRIPTION = """
+    This app lets you fill a form containing the data of a new lead, 
+    and call a lead scoring model through an API to predict how likely it is that the lead 
+    will buy the product.
+"""
 
-def project_description():
-    """Streamlit widget to show the project description on the home page."""
+
+def main():
+    st.set_page_config(
+        page_title="Lead scoring",
+        page_icon="💯",
+        layout="centered",
+        initial_sidebar_state="auto",
+    )
 
     st.title("Lead scoring")
-    st.text("")
-    st.markdown(utils.PROJECT_DESCRIPTION)
+    st.markdown("---")
+    st.markdown(PROJECT_DESCRIPTION)
+    link = f"[*here*]({utils.API_URL}/docs)"
+    st.markdown(
+        "*The documentation for the API can be accessed *" + link + ".", unsafe_allow_html=True
+    )
+    st.markdown("---")
 
-
-def single_prediction():
     page = st.empty()
 
     with page.beta_container():
-        with st.beta_expander(label="Form", expanded=True):
+        with st.beta_expander(label="Form", expanded=False):
             lead_data = [form()]
         st.text("")
         get_pred = st.button("Get prediction")
@@ -43,75 +57,7 @@ def single_prediction():
 
             st.markdown("---")
             if st.button("New prediction"):
-                single_prediction()
-
-
-def batch_prediction():
-    uploaded_file = st.file_uploader("Choose a file")
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        st.write(df)
-
-    # Get predictions
-
-
-def lead_data():
-    id = st.text_input(label="Lead id", value="")
-    # id_dict = {"id": id}
-    if st.button("Get data"):
-        response = API.get(id)
-
-        # df = pd.DataFrame(response.text)
-        st.write(id)
-        st.write(response)
-        st.write(response.text)
-
-
-def documentation():
-    st.title("API documentation")
-    st.text("")
-
-    link = f"[> Access the documentation here <]({utils.API_URL}/docs)"
-    st.markdown(link, unsafe_allow_html=True)
-
-
-def main():
-    """Homepage for the Streamlit app, redirects to appropriate function based on user selection."""
-
-    st.set_page_config(
-        page_title="Lead scoring",
-        page_icon="💯",
-        layout="centered",
-        initial_sidebar_state="auto",
-    )
-
-    st.sidebar.text("")
-    st.sidebar.text("")
-
-    option = st.sidebar.selectbox(
-        "I want to...",
-        [
-            "",
-            "make a single prediction",
-            "make predictions on a file",
-            "get data for a lead",
-            "see the API documentation",
-        ],
-    )
-
-    st.text(" ")
-    st.sidebar.markdown("---")
-
-    if option == "":
-        project_description()
-    elif option == "make a single prediction":
-        single_prediction()
-    elif option == "make predictions on a file":
-        batch_prediction()
-    elif option == "get data for a lead":
-        lead_data()
-    else:
-        documentation()
+                main()
 
 
 if __name__ == "__main__":
